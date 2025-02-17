@@ -39,6 +39,14 @@ public class StudentHttpServer {
     private class StudentHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
+            exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type, X-Api-Key");
+
+            if ("OPTIONS".equals(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(204, -1);
+                return;
+            }
             if (!Authentication.authenticate(exchange)) {
                 return;
             }
@@ -123,7 +131,7 @@ public class StudentHttpServer {
             String requestBody = new String(exchange.getRequestBody().readAllBytes());
             JsonNode jsonNode = objectMapper.readTree(requestBody);
 
-            int id = jsonNode.get("id").asInt();
+            int id = studentService.getStudents().size() + 1;
             String firstName = jsonNode.get("firstName").asText();
             String lastName = jsonNode.get("lastName").asText();
             int age = jsonNode.get("age").asInt();

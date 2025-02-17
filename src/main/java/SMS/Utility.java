@@ -22,11 +22,11 @@ public class Utility {
                     int age = Integer.parseInt(data[4]);
                     Major major = Major.valueOf(data[5]);
                     if ("GraduateStudent".equals(type)) {
-                        GraduateStudent gradStudent = new GraduateStudent(id, firstName, lastName, age, major, null);
+                        GraduateStudent gradStudent = new GraduateStudent(id, firstName, lastName, age, major, "example@gmail.com");
                         gradStudent.setGPA(Double.parseDouble(data[6]));
                         students.add(gradStudent);
                     } else if ("UndergradStudent".equals(type)) {
-                        UndergradStudent undergradStudent = new UndergradStudent(id, firstName, lastName, age, major, null);
+                        UndergradStudent undergradStudent = new UndergradStudent(id, firstName, lastName, age, major, "example@gmail.com");
                         students.add(undergradStudent);
                     }
                     if (id > maxId) {

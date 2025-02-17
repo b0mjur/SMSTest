@@ -10,7 +10,13 @@ public class Authentication {
         String apiKey = exchange.getRequestHeaders().getFirst("X-Api-Key");
         if (apiKey != null) {
             if (apiKey.equals("mySecretKey")) {
-                return  true;
+                String response = "{\"message\":\"Authenticated successfully\"}";
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(200, response.getBytes().length);
+                OutputStream os = exchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+                return true;
             }
         } else {
             String response = "{\"error\":\"Unauthorized\"}";
