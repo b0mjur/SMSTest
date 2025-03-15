@@ -137,8 +137,9 @@ public class StudentHttpServer {
             String lastName = jsonNode.get("lastName").asText();
             int age = jsonNode.get("age").asInt();
             Major major = Major.valueOf(jsonNode.get("major").asText());
+            String email = jsonNode.get("email").asText();
 
-            Student student = new UndergradStudent(id, firstName, lastName, age, major, null);
+            Student student = new UndergradStudent(id, firstName, lastName, age, major, email);
             studentService.addStudent(student);
             studentService.saveStudents();
             return objectMapper.writeValueAsString(student);
